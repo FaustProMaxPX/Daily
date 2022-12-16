@@ -33,15 +33,15 @@
                     <div class="col-md-12 col-sm-12 col-xs-12 list-group row">
                         <ul class="nav sidebar-nav" style="margin:0 auto;">
                             <li>
-                                <a class="list-group-item" href="/view/test4"><i
+                                <a class="list-group-item" href="/admin/employees"><i
                                         class="fa fa-fw fa-address-book my-list-group-icon"></i>员 工</a>
                             </li>
                             <li>
-                                <a class="list-group-item" href="/view/test5"><i
+                                <a class="list-group-item" href="/admin/departments"><i
                                         class="fa fa-fw fa-handshake-o my-list-group-icon"></i>部 门</a>
                             </li>
                             <li>
-                                <a class="list-group-item" href="/view/test7"><i
+                                <a class="list-group-item" href="/admin/checkins"><i
                                         class="fa fa-fw fa-id-card-o my-list-group-icon"></i>考 勤</a>
                             </li>
                             <li class="dropdown">
@@ -49,8 +49,8 @@
                                         class="fa fa-fw fa-book my-list-group-icon"></i>请 假
                                     <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href="/view/test6"><i class="fa fa-fw fa-sitemap my-list-group-icon"></i>请假类型</a></li>
-                                    <li><a href="/view/test8"><i class="fa fa-fw fa-check my-list-group-icon"></i>请假审批</a></li>
+                                    <li><a href="/admin/leavetypes"><i class="fa fa-fw fa-sitemap my-list-group-icon"></i>请假类型</a></li>
+                                    <li><a href="/admin/checkleaves"><i class="fa fa-fw fa-check my-list-group-icon"></i>请假审批</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -122,7 +122,7 @@
                                             <!-- jstl -->
                                           
                                             <c:forEach var="item" items="${list}">
-                                                <a href="${item.id}"
+                                                <a href="${'/admin/employees?id='.concat(item.id)}"
                                                    class="col-md-12 col-sm-12 col-xs-12 list1-group-item list1-group-item-action"><i
                                                         class="fa fa-user" aria-hidden="true"
                                                         style="float:left; margin-top:10px;"></i>${item.name}</a>
@@ -196,13 +196,23 @@
                                             <label for="employee-name-edit"
                                                 class="col-md-2 col-sm-2 col-xs-2 col-form-label">姓名</label>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <input type="text" class="form-control" id="employee-name-edit" placeholder="姓名">
+                                                <c:if test="${employee != null}">
+                                                    <input type="text" class="form-control" id="employee-name-edit" placeholder="姓名" value="${employee.name}">
+                                                </c:if>
+                                                <c:if test="${employee == null}">
+                                                    <input type="text" class="form-control" id="employee-name-edit" placeholder="姓名">
+                                                </c:if>
                                             </div>
                                             <!-- 电话 -->
                                             <label for="employee-phone-edit"
                                                 class="col-md-2 col-sm-2 col-xs-2 col-form-label">电话</label>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <input type="text" class="form-control" id="employee-phone-edit" placeholder="电话">
+                                                <c:if test="${employee != null}">
+                                                    <input type="text" class="form-control" id="employee-name-edit" placeholder="电话" value="${employee.telephone}">
+                                                </c:if>
+                                                <c:if test="${employee == null}">
+                                                    <input type="text" class="form-control" id="employee-name-edit" placeholder="电话" value="${employee.telephone}">
+                                                </c:if>
                                             </div>
                                             <!-- 部门id -->
                                             <!-- 使用选择框 -->
@@ -231,13 +241,21 @@
                                             <label for="employee-name-show"
                                                 class="col-md-2 col-sm-2 col-xs-2 col-form-label">姓名</label>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <div class="form-control" id="employee-name-show"></div>
+                                                <div class="form-control" id="employee-name-show">
+                                                    <c:if test="${employee != null}">
+                                                        <c:out value="${employee.name}"/>
+                                                    </c:if>
+                                                </div>
                                             </div>
                                             <!-- 电话 -->
                                             <label for="employee-phone-show"
                                                 class="col-md-2 col-sm-2 col-xs-2 col-form-label">电话</label>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <div class="form-control" id="employee-phone-show"></div>
+                                                <div class="form-control" id="employee-phone-show">
+                                                    <c:if test="${employee != null}">
+                                                        <c:out value="${employee.telephone}"/>
+                                                    </c:if>
+                                                </div>
                                             </div>
                                             <!-- 部门id -->
                                             <!-- 使用选择框 -->
@@ -245,6 +263,7 @@
                                                 class="col-md-2 col-sm-2 col-xs-2 col-form-label">部门</label>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
                                                 <div class="form-control" id="employee-department-show">
+                                                    <c:out value="${employee.department}"/>
                                                 </div>
                                             </div>
                                             <!-- 职务，员工和管理员两种 -->
@@ -252,6 +271,7 @@
                                                 class="col-md-2 col-sm-2 col-xs-2 col-form-label">职务</label>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
                                                 <div class="form-control" id="employee-job-show">
+                                                    <c:out value="${employee.role}"/>
                                                 </div>
                                             </div>
                                         </div>
