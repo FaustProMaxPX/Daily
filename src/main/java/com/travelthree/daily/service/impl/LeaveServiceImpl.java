@@ -131,7 +131,7 @@ public class LeaveServiceImpl implements LeaveService {
                         leave.getId(),
                         leave.getStartdate().toString(),
                         leave.getEnddate().toString(),
-                        leave.getStatus().toString(),
+                        LeaveCheckStatus.getRoleFromOrdinal(leave.getStatus()).toString(),
                         leaveTypeMapper.selectByPrimaryKey(leave.getTypeId()).getName(),
                         leave.getReason(),
                         leave.getEmployeeId(),
@@ -161,6 +161,8 @@ public class LeaveServiceImpl implements LeaveService {
                         && end.isAfter(leave.getStartdate()))
                 || (start.isBefore(leave.getEnddate())
                         && end.isAfter(leave.getEnddate()))
+                || (start.isEqual(leave.getStartdate()))
+                || (end.isEqual(leave.getEnddate()))
 
         )) {
             throw new BusinessException(ResultCodeEnum.FORBIDDEN_OP, "当前时段内用户已有请假");
